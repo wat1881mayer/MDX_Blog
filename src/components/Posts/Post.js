@@ -4,11 +4,32 @@ import { FaRegClock } from 'react-icons/fa'
 import { IoMdArrowRoundForward } from 'react-icons/io'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
+import Footer from '../Footer'
 
-const Post = () => {
-  
+const Post = ({excerpt,frontmatter}) => {
+  const {title,image,slug,date,category,readTime} = frontmatter
   return (
-    <h4>single post</h4>
+    <Wrapper>
+      <GatsbyImage image={getImage(image)} alt={title} className="img" />
+      <div className="info">
+        <span className="category">{category}</span>
+        <h3>{title}</h3>
+        <div className="underline"></div>
+        <p>{excerpt}</p>
+        <Link to={`/posts/${slug}`} className="Link">
+          続きを読む <IoMdArrowRoundForward />
+        </Link>
+      </div>
+      <footer>
+        <span className="date">
+          <FaRegClock className="icon"></FaRegClock>
+          {date}
+        </span>
+        <span>
+          {readTime}分で読めます
+        </span>
+      </footer>
+      </Wrapper>
   )
 }
 

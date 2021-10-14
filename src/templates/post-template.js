@@ -6,11 +6,64 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import Banner from '../components/Banner'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
-const PostTemplate = () => {
-  return <h2>post template</h2>
+
+const PostTemplate = ({ data }) => {
+  const {
+    mdx: {
+      frontmatter: { title, category, image, date,embeddebImages},
+      body,
+    },
+  } = data
+  return (
+    <Layout>
+      <Hero />
+      <Wrapper>
+        {/* post info */}
+        <article>
+          <GatsbyImage
+            image={getImage(image)}
+            alt={title}
+            className="main-img"
+          />
+          <div className="post-info">
+            <span>{category}</span>
+            <h2>{title}</h2>
+            <p>{date}</p>
+            <div className="underline"></div>
+          </div>
+          <MDXRenderer embeddebImages={embeddebImages}>{body}</MDXRenderer>
+        </article>
+        {/* banner */}
+        <Banner />
+      </Wrapper>
+    </Layout>
+  )
 }
 
-
+export const query = graphql`
+  query GetSinglePost($slug: String) {
+    mdx(frontmatter: { slug: { eq: $slug } }) {
+      body
+      frontmatter {
+        category
+        date(formatString: "YYYY,Do,YYYY")
+        embeddebImages {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+        image {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+        readTime
+        slug
+        title
+      }
+    }
+  }
+`
 
 const Wrapper = styled.section`
   width: 85vw;
