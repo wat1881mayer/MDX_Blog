@@ -17,7 +17,7 @@ Variables
   --clr-primary-7: hsl(245, 65%, 59%);
   --clr-primary-8: hsl(245, 80%, 74%);
   --clr-primary-9: hsl(245, 94%, 87%);
-  --clr-primary-10:hsl(189, 87%, 94%);
+  --clr-primary-10:hsla(180, 87%, 94%, 0.986);
   /* darkest grey - used for headings */
   --clr-grey-1: hsl(209, 61%, 16%);
   --clr-grey-3: hsl(209, 34%, 30%);
@@ -31,8 +31,10 @@ Variables
   --clr-green-light: hsl(134, 41%, 88%);
   --clr-red-dark: hsl(360, 67%, 44%);
   --clr-red-light: hsl(360, 71%, 66%);
+  --clr-blue-light: hsl(220, 61%, 59%);
   --clr-white: #fff;
   --clr-black: #0a0c10;
+  --clr-black-oppacity: hsla(0, 0%, 0%, 0.781);
   --ff-primary: 'Roboto', sans-serif;
   --ff-secondary: 'Open Sans', sans-serif;
   --transition: all 0.3s linear;
@@ -252,7 +254,7 @@ Navbar
     margin-right: 1rem;
   }
   .page-link {
-    color: var(--clr-black);
+    color: var(--clr-blue-light);
     font-weight: 500;
     letter-spacing: var(--spacing);
     font-size: 1rem;
@@ -347,29 +349,30 @@ Hero
 ===============
 */
 .hero {
-  background: var(--clr-primary-10);
-  height: 12rem;
+  background: var(--clr-black-oppacity);
+  height: 6rem;
   position: relative;
   z-index: -1;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
 }
 
-.hero::after {
+/*.hero::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   height: 6rem;
   width: 100%;
-  background: url('../assets/vector.svg');
+  background: url('../assets/vector1.svg');
   background-size: cover;
 }
+*/
 .hero-person {
   display: none !important;
 }
 @media screen and (min-width: 800px) {
   .hero {
-    height: 20rem;
+    height: 9rem;
   }
   .hero-person {
     width: 20rem;
