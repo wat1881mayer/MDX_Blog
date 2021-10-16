@@ -2,16 +2,17 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import Hero from '../components/Hero'
 import Posts from '../components/Posts'
-import Pagination from '../components/Pagination'
+import Paginated from '../components/Paginated'
 import Layout from '../components/Layout'
 
 const BlogList = props => {
   const posts = props.data.allMdx.nodes
+  console.log(props.pageContext)
   return (
     <Layout>
       <Hero />
-      <Posts posts={posts} title="all posts" />
-      <Pagination props={props}/>
+      <Posts posts={posts} title="all posts" pageContext={props.pageContext} />
+       
     </Layout>
   )
 }
@@ -37,6 +38,8 @@ export const blogListQuery = graphql`
             }
           }
         }
+        id
+        excerpt
       }
     }
   }
