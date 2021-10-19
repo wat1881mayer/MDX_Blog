@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import MuiPagination from '@mui/material/Pagination'
 import {withStyles} from '@mui/styles'
 import Stack from '@mui/material/Stack'
@@ -16,7 +15,7 @@ const Paginated = ({ pageContext }) => {
   
   const Pagination = withStyles({
     root: {
-      display: 'inline-block',  //中央寄せのためインラインブロックに変更
+      
       marginBottom:'10px',
     },
   })(MuiPagination);

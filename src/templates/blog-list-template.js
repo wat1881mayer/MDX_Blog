@@ -2,7 +2,6 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import Hero from '../components/Hero'
 import Posts from '../components/Posts'
-import Paginated from '../components/Paginated'
 import Layout from '../components/Layout'
 
 const BlogList = props => {

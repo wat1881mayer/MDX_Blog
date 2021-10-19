@@ -12,9 +12,12 @@ const Posts = ({ posts, title ,pageContext}) => {
           {posts.map(post =>{
             return <Post key={post.id} {...post} />
           })}
-        </article>
+        
         {/* banner column */}
-        <Paginated pageContext={pageContext} />
+        <div className="jss1">
+          <Paginated pageContext={pageContext} />
+        </div>
+        </article>
         <article >
           <Banner />
         </article>

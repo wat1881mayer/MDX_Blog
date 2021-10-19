@@ -9,7 +9,7 @@ const CategoryTemplate = (props) => {
   const {pageContext:{category}} = props
   return <Layout>
     <Hero />
-    <Posts posts={posts} title={`category/${category}`} />
+    <Posts posts={posts} title={`category/${category}`} pageContext={props.pageContext}/>
   </Layout>
 }
 
