@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import CategoriesBar from '../components/CategoriesList'
-const Links = ({ styleClass, children }) => {
-  
+const NavbarLinks = ({ styleClass, clickOn}) => {
+    
+
   return (
     <ul className={styleClass}>
       <li>
@@ -11,8 +12,7 @@ const Links = ({ styleClass, children }) => {
         </Link>
       </li>
       <li>
-        Categories
-        {children}
+        <div className="page-link" onClick={clickOn}>Categories </div>
       </li>
       <li>
         <Link to="/newsletter" className="page-link">
@@ -23,4 +23,4 @@ const Links = ({ styleClass, children }) => {
   )
 }
 
-export default Links
+export default NavbarLinks

@@ -1,22 +1,23 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import { FaBars } from 'react-icons/fa'
-import logo from '../assets/Frame1.svg'
-import Links from '../constants/links'
+import logo from '../assets/TitleLogo.svg'
+import { StaticImage } from 'gatsby-plugin-image'
 import SocialLinks from '../constants/socialLinks'
-const Navbar = ({toggle}) => {
+import NavbarLinks from '../constants/navbarLinks'
+const Navbar = ({toggle,clickOn}) => {
   return (
     <nav className="navbar">
       <div className="nav-center">
         <div className="nav-header">
           <Link to="/" className="nav-logo">
-            <img src={logo} alt="mad logo" />
+            <StaticImage src="../assets/TitleLogo.svg" alt="mad logo" className="nav-logo"/>
           </Link>
           <button className="toggle-btn" onClick={toggle}>
             <FaBars />
           </button>
         </div>
-        <Links styleClass="nav-links" />
+        <NavbarLinks styleClass="nav-links" clickOn={clickOn}/>
         <SocialLinks styleClass="nav-icons" />
       </div>
     </nav>

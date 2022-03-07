@@ -8,16 +8,26 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
+import CategoriesList from './CategoriesList'
+
 import Footer from './Footer'
 const Layout = ({ children }) => {
   const [isOpen,setIsOpen] = React.useState(false);
+  const [isViewed,setIsViewed] = React.useState(false)
   const toggle = () => {
     setIsOpen(!isOpen)
   }
 
+  const clickOn = ()=>{
+    setIsViewed(!isViewed)
+  }
+
+  console.log(isViewed)
+
   return (
     <>
-    <Navbar toggle={toggle}/>
+    <Navbar toggle={toggle} clickOn={clickOn}/>
+    <CategoriesList isViewed={isViewed} clickOn={clickOn} />
     <Sidebar isOpen={isOpen} toggle={toggle}/>
      <main>{children}</main>
      <Footer />

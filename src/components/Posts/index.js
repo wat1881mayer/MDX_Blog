@@ -1,7 +1,8 @@
 import React from 'react'
 import Post from './Post'
 import Banner from '../Banner'
-const Posts = ({ posts, title }) => {
+import Paginated from '../Paginated'
+const Posts = ({ posts, title ,pageContext}) => {
   return (
     <section className="posts">
       <h3 className="posts-title">{title}</h3>
@@ -11,8 +12,12 @@ const Posts = ({ posts, title }) => {
           {posts.map(post =>{
             return <Post key={post.id} {...post} />
           })}
-        </article>
+        
         {/* banner column */}
+        <div className="jss1">
+          <Paginated pageContext={pageContext} />
+        </div>
+        </article>
         <article >
           <Banner />
         </article>
