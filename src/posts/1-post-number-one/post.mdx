@@ -1,13 +1,13 @@
 ---
-title: Backroads Tours
-slug: backroads-tours
-image: ./images/html-1.png
-date: 2020-05-02
-author: john smith
-category: HTML&CSS
-readTime: 50
+title: skaffoldのプロジェクトへの導入
+slug: skaffold
+image: ./images/skaffold.png
+date: 2022-03-07
+author: wattyler
+category: kubernetes
+readTime: 10
 embeddebImages: 
- - ./images/html-1.png
+ - ./images/skaffold.png
  - ./images/html-2.png
  - ./images/html-3.png
 ---
@@ -16,40 +16,83 @@ import { Link } from 'gatsby'
 import {GatsbyImage,getImage} from 'gatsby-plugin-image'
 
 <GatsbyImage image={getImage(props.embeddebImages[0])} alt="random stuff" className="first-inline-img" />
-<GatsbyImage image={getImage(props.embeddebImages[1])} alt="random stuff" className="first-inline-img" />
-<GatsbyImage image={getImage(props.embeddebImages[2])} alt="random stuff" className="first-inline-img" />
 
 
-_I'm baby humblebrag neutra taiyaki af vice bespoke locavore fanny pack_ ramps vexillologist succulents. Normcore etsy pour-over adaptogen skateboard fashion axe, bushwick food truck beard lumbersexual master cleanse actually deep v. **Retro cardigan raw denim franzen kickstarter you probably haven't heard of them literally** aesthetic snackwave four dollar toast. Keffiyeh synth umami, helvetica yr flexitarian jean shorts banh mi cardigan leggings letterpress paleo intelligentsia narwhal.
 
-<blockquote>
-  I'm baby tumblr fanny pack tousled seitan. Man bun shaman yr, bushwick fam
-  hammock williamsburg kombucha keytar VHS. Chambray street art authentic,
-</blockquote>
+皆さん、Google社のskaffoldをご存知でしょうか？  
+skaffoldはkubernetesクラスターを用いた開発をする場合に開発フローの一部を自動化できる便利ツールです。  
+skaffoldがない場合の通常のローカル環境でのkubernetesでの開発フローとなると以下のようになるかと思います。  
+ソースコードを修正した後、dockerイメージを再作成し、dockerレポジトリにpushし、manifestファイルをkubectl applyして起動。  
+そこから修正が予想通り動くかを確認するといった感じでしょうか。  
+skaffold を使用した場合は、ソースコード修正後、勝手にdockerイメージを作成し、kubernetesのService、deploymentをロールアウトしてくれます。  
+これにより一々コマンドを打つことなく、変更内容を即座に確認することができるようになります。  
+<a href="https://skaffold.dev" target="_blank" rel="noopener noreferrer">skaffold公式サイトのリンクはこちら</a>
 
 <blockquote display="info">
-  I'm baby tumblr fanny pack tousled seitan. Man bun shaman yr, bushwick fam
-  hammock williamsburg kombucha keytar VHS. Chambray street art authentic,
+  Skaffold handles the workflow for building, pushing and deploying your application, allowing you to focus on what matters most: writing code.
 </blockquote>
 
-```jsx
-import React from 'react'
+具体的な、skaffoldの利用手順を解説します。
+1. skaffoldのインストール(macの場合)
+  ```shell
+  brew install skaffold
+  ```
+2. マニフェストファイルの用意  
+3. skaffold.ymalファイルを用意  
 
-const Counter = () => {
-  const [count, setCount] = React.useState(0)
-  return (
-    <section className="counter">
-      <h4>show some love to MDX</h4>
-      <h4>likes {count}</h4>
-      <button className="btn btn-danger" onClick={() => setCount(count + 1)}>
-        i like mdx
-      </button>
-    </section>
-  )
-}
-export default Counter
+
+
+```yaml
+apiVersion: skaffold/v2beta26
+kind: Config
+deploy:
+  #kubernetesを使用する場合は、kubectlと記載
+  kubectl:
+    #skaffoldによって起動するmanifestファイルのパスを記載する
+    manifests:
+      - ./infra
+build:
+  local:
+    push: false
+  artifacts:
+  #ファイルが変更された場合にビルドするdockerファイルが存在するフォルダとそのイメージをpushする先のdocker image名を記載する
+    - image: YOUR_DOCKER_ACCOUNT_NAME/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: YOUR_DOCKER_ACCOUNT_NAME/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: YOUR_DOCKER_ACCOUNT_NAME/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
 ```
 
+4. 以下コマンドでskaffold を起動する。
+```shell
+skaffold dev
+```
+
+5. 上記3でartifactsに指定したフォルダのファイルを変更した場合にskaffoldが自動で  
+   dockerfileをビルドし、dockerレポジトリにpushし、k8sのdeploymentやServiceをロールアウトしてくれます。  
+
+6. Ctrl+ C で停止できます。  
+
+そこまで複雑なことはないのでk8sで開発をする際には是非ともskaffoldを導入してみてはいかがでしょうか  
 <Link to="/posts" className="btn center-btn">
   all posts
 </Link>
